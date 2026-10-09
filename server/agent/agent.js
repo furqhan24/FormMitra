@@ -110,7 +110,7 @@ export async function createFormPlan({ extracted } = {}) {
       .forEach((m) => {
         ambiguities.push({
           field: m.field,
-          issue: m.reasoning || `Confidence is ${Math.round(m.confidence * 100)}% — requires user review.`,
+          issue: m.reasoning || `Confidence is ${Math.round(m.confidence * 100)}% and requires user review.`,
           question: `Please verify the value for ${m.field}.`
         });
       });

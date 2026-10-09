@@ -68,28 +68,38 @@ export default function Home() {
   }
 
   return (
-    <main className="app-shell">
-      <section className="hero" aria-labelledby="page-title">
-        <div className="hero-copy">
-          <p className="eyebrow">AI-assisted form filling</p>
-          <h1 id="page-title">Form Mitra</h1>
-          <p>
+    <main className="min-h-screen">
+      <section
+        className="grid items-center gap-8 bg-[linear-gradient(135deg,rgba(7,37,49,0.94),rgba(16,96,104,0.9)),url('/demo-form-pattern.svg')] bg-cover px-5 py-10 text-[#f5fffd] sm:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,520px)] lg:px-16 lg:py-20"
+        aria-labelledby="page-title"
+      >
+        <div className="max-w-[720px]">
+          <p className="mb-2 text-xs font-extrabold uppercase text-[#7ee0d0]">AI-assisted form filling</p>
+          <h1 id="page-title" className="m-0 text-5xl font-extrabold leading-none sm:text-7xl lg:text-8xl">
+            Form Mitra
+          </h1>
+          <p className="mt-5 max-w-[620px] text-base leading-7 sm:text-lg">
             An intelligent, guarded assistant for extracting facts, mapping Community Services fields, flagging
             ambiguity, and keeping humans in control before any submission.
           </p>
         </div>
-        <form className="intake-panel" onSubmit={handleSubmit}>
-          <div className="field-group">
-            <div className="label-with-samples">
-              <label htmlFor="user-text">Known information</label>
+        <form
+          className="grid gap-4 rounded-lg border border-[#1c525b29] bg-white p-5 text-[#16323f] shadow-[0_20px_60px_rgba(7,37,49,0.12)]"
+          onSubmit={handleSubmit}
+        >
+          <div className="grid gap-2">
+            <div>
+              <label htmlFor="user-text" className="font-extrabold text-[#183946]">
+                Known information
+              </label>
             </div>
-            <div className="samples-toolbar" aria-label="Synthetic sample inputs">
-              <span className="samples-hint">Quick test:</span>
+            <div className="mb-1 flex flex-wrap items-center gap-2" aria-label="Synthetic sample inputs">
+              <span className="text-xs font-bold uppercase text-[#486581]">Quick test:</span>
               {SAMPLES.map((s, idx) => (
                 <button
                   key={idx}
                   type="button"
-                  className="sample-pill"
+                  className="min-h-7 rounded-full border border-[#bdd4d2] bg-[#fbfefd] px-3 py-1 text-xs font-semibold text-[#0f766e] transition hover:border-[#0f766e] hover:bg-[#0f766e] hover:text-white"
                   onClick={() => handleSelectSample(s.text)}
                 >
                   {s.label}
@@ -102,18 +112,23 @@ export default function Home() {
               onChange={(event) => setText(event.target.value)}
               placeholder="Paste applicant details or select a sample above..."
               rows="6"
+              className="min-h-44 w-full resize-y rounded-md border border-[#bdd4d2] bg-[#fbfefd] p-3 text-[#16323f]"
             />
           </div>
           <FileUpload files={files} onFilesChange={(selectedFiles) => setFiles(Array.from(selectedFiles))} />
-          <button type="submit" disabled={isLoading || (!text.trim() && files.length === 0)}>
+          <button
+            type="submit"
+            disabled={isLoading || (!text.trim() && files.length === 0)}
+            className="min-h-12 rounded-md bg-[#0f766e] px-4 py-3 font-extrabold text-white transition hover:bg-[#0b5f59] disabled:cursor-not-allowed disabled:opacity-55"
+          >
             {isLoading ? 'Analyzing with Gemma...' : 'Analyze draft'}
           </button>
         </form>
       </section>
 
-      <section className="content-grid">
+      <section className="grid gap-6 px-5 py-6 sm:px-8 lg:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] lg:px-12 lg:py-12">
         <ChatPanel status={status} result={result} error={error} />
-        <div className="stack">
+        <div className="grid gap-6">
           <FormPreview result={result} onSaveReview={handleSaveReview} />
           <IssueCard />
         </div>

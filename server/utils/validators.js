@@ -31,7 +31,8 @@ export function validateFieldMappings(mappings) {
       field,
       value,
       confidence: Number.isFinite(confidence) ? confidence : 0,
-      source: String(mapping?.source ?? 'unknown')
+      source: String(mapping?.source ?? 'unknown'),
+      reasoning: mapping?.reasoning ? String(mapping.reasoning) : undefined
     };
   });
 
