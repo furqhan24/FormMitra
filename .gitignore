@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+server/.env
+client/.env
+
+# Build output
+dist/
+client/dist/
+coverage/
+
+# Local uploads and private documents
+server/uploads/*
+!server/uploads/.gitkeep
+uploads/
+private-documents/
+
+# Browser automation state
+.auth/
+browser-profiles/
+playwright-report/
+test-results/
+
+# Logs and OS noise
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

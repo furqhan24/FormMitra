@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Mitra Demo Form</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        color: #16323f;
+        background: #f6faf9;
+      }
+
+      main {
+        width: min(720px, calc(100% - 32px));
+        margin: 40px auto;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+        border: 1px solid #bdd4d2;
+        border-radius: 8px;
+        padding: 24px;
+        background: #fff;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 700;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font: inherit;
+      }
+
+      input,
+      select,
+      textarea {
+        border: 1px solid #bdd4d2;
+        border-radius: 6px;
+        padding: 10px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 6px;
+        padding: 12px 16px;
+        color: #fff;
+        background: #0f766e;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Community Services Request</h1>
+      <p>Synthetic fixture for local Form Mitra development. Do not enter real personal data.</p>
+      <form>
+        <label>
+          Full name
+          <input name="fullName" autocomplete="name" required />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+        <label>
+          Phone
+          <input name="phone" type="tel" autocomplete="tel" />
+        </label>
+        <label>
+          Program
+          <select name="program" required>
+            <option value="">Choose one</option>
+            <option>Community services</option>
+            <option>Education support</option>
+            <option>Healthcare navigation</option>
+          </select>
+        </label>
+        <label>
+          Requested date
+          <input name="requestedDate" type="date" required />
+        </label>
+        <label>
+          Additional notes
+          <textarea name="notes" rows="5"></textarea>
+        </label>
+        <button type="button">Review only</button>
+      </form>
+    </main>
+  </body>
+</html>

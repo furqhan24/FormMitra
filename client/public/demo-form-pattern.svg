@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Abstract form field pattern">
+  <rect width="1200" height="800" fill="#0a2f3a"/>
+  <g fill="none" stroke="#61d6c7" stroke-opacity="0.18" stroke-width="2">
+    <rect x="80" y="90" width="360" height="56" rx="8"/>
+    <rect x="80" y="174" width="520" height="56" rx="8"/>
+    <rect x="80" y="258" width="280" height="56" rx="8"/>
+    <rect x="760" y="110" width="320" height="56" rx="8"/>
+    <rect x="760" y="194" width="240" height="56" rx="8"/>
+    <rect x="680" y="520" width="380" height="64" rx="8"/>
+  </g>
+  <path d="M-50 640 C 250 470, 440 780, 760 590 S 1120 380, 1260 500" stroke="#2aa79b" stroke-opacity="0.24" stroke-width="70" fill="none"/>
+</svg>

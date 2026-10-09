@@ -1,0 +1,16 @@
+{
+  "name": "form-mitra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-assisted form filling foundation with a React client and Express backend.",
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "check:server": "node --check server/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
