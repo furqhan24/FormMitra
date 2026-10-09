@@ -5,6 +5,7 @@
   "description": "AI-assisted form filling foundation with a React client and Express backend.",
   "scripts": {
     "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev:all": "node scripts/dev.mjs",
     "dev": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
     "build": "npm run build --prefix client",

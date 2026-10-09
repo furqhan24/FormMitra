@@ -5,6 +5,21 @@ import FormPreview from '../components/FormPreview.jsx';
 import IssueCard from '../components/IssueCard.jsx';
 import { createPlan, extractDocument, getHealth } from '../services/api.js';
 
+const SAMPLES = [
+  {
+    label: 'Complete Info (Pavan Kumar)',
+    text: 'My name is Pavan Kumar. My email is pavan@example.com. I want to request the community support program on 2026-11-15.'
+  },
+  {
+    label: 'Ambiguous Single Word ("pavan")',
+    text: 'pavan'
+  },
+  {
+    label: 'Missing Fields (Assistance request)',
+    text: 'I need assistance. I have not provided my email or requested date.'
+  }
+];
+
 export default function Home() {
   const [text, setText] = useState('');
   const [files, setFiles] = useState([]);
@@ -15,12 +30,15 @@ export default function Home() {
 
   useEffect(() => {
     getHealth()
-      .then((payload) => setStatus(`Backend online: ${payload.service}`))
+      .then((payload) => {
+        const provider = payload.modelProvider ?? 'google-gemma';
+        setStatus(`Backend online: ${payload.service} (${provider})`);
+      })
       .catch((err) => setStatus(`Backend unavailable: ${err.message}`));
   }, []);
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     setIsLoading(true);
     setError('');
     setResult(null);
@@ -28,16 +46,25 @@ export default function Home() {
 
     try {
       const extracted = await extractDocument({ text, files });
-      setStatus('Creating guarded field mapping plan...');
+      setStatus('Analyzing with Gemma and checking form schema...');
       const plan = await createPlan({ extracted });
       setResult({ extracted, plan });
-      setStatus('Ready for review');
+      setStatus(plan.validation.valid ? 'Ready for final review' : 'Action needed: review missing or ambiguous fields');
     } catch (err) {
       setError(err.message);
       setStatus('Needs attention');
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function handleSaveReview(reviewedData) {
+    setStatus('Review confirmed by applicant. Ready for subsequent action.');
+  }
+
+  function handleSelectSample(sampleText) {
+    setText(sampleText);
+    setError('');
   }
 
   return (
@@ -47,31 +74,47 @@ export default function Home() {
           <p className="eyebrow">AI-assisted form filling</p>
           <h1 id="page-title">Form Mitra</h1>
           <p>
-            A careful assistant foundation for extracting facts, mapping fields, resolving issues, and keeping humans
-            in control before submission.
+            An intelligent, guarded assistant for extracting facts, mapping Community Services fields, flagging
+            ambiguity, and keeping humans in control before any submission.
           </p>
         </div>
         <form className="intake-panel" onSubmit={handleSubmit}>
           <div className="field-group">
-            <label htmlFor="user-text">Known information</label>
+            <div className="label-with-samples">
+              <label htmlFor="user-text">Known information</label>
+            </div>
+            <div className="samples-toolbar" aria-label="Synthetic sample inputs">
+              <span className="samples-hint">Quick test:</span>
+              {SAMPLES.map((s, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className="sample-pill"
+                  onClick={() => handleSelectSample(s.text)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
             <textarea
               id="user-text"
               value={text}
               onChange={(event) => setText(event.target.value)}
-              placeholder="Paste synthetic applicant details or instructions here."
-              rows="8"
+              placeholder="Paste applicant details or select a sample above..."
+              rows="6"
             />
           </div>
           <FileUpload files={files} onFilesChange={(selectedFiles) => setFiles(Array.from(selectedFiles))} />
           <button type="submit" disabled={isLoading || (!text.trim() && files.length === 0)}>
-            {isLoading ? 'Working...' : 'Analyze draft'}
+            {isLoading ? 'Analyzing with Gemma...' : 'Analyze draft'}
           </button>
         </form>
       </section>
+
       <section className="content-grid">
         <ChatPanel status={status} result={result} error={error} />
         <div className="stack">
-          <FormPreview />
+          <FormPreview result={result} onSaveReview={handleSaveReview} />
           <IssueCard />
         </div>
       </section>
